@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://rq71e63onjhb"]
+
+[ext_resource type="Texture2D" uid="uid://chum4k6ujrihh" path="res://assets/Tiles/FreeTile.png" id="1_w3was"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6uuwg"]
+size = Vector2(112, 112)
+
+[node name="LetterTile" type="StaticBody2D"]
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.065, 0.065)
+texture = ExtResource("1_w3was")
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(64, 64)
+shape = SubResource("RectangleShape2D_6uuwg")
