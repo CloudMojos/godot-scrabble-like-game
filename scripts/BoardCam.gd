@@ -1,12 +1,14 @@
 extends Camera2D
 
+var timer = 0
+
 var screen_size
 var grid
 
 var zoom_speed: float = 0.03
 var min_zoom: float = 0.3
 var max_zoom: float = 2.0
-var drag_sensitivity: float = 1.0
+var drag_sensitivity: float = 0.5
 
 func _ready():
 	center_camera()
@@ -46,28 +48,32 @@ func _input(event):
 		increase_grid_cells(bounds, transform_map)
 
 func increase_grid_cells(bounds, transform_map):
-	var left = grid.local_to_map(Vector2(bounds.left, transform_map.y)).x
-	var right = grid.local_to_map(Vector2(bounds.right, transform_map.y)).x
-	var top = grid.local_to_map(Vector2(transform_map.x, bounds.top)).y
-	var bottom = grid.local_to_map(Vector2(transform_map.x, bounds.bottom)).y
+	var left = grid.local_to_map(Vector2(bounds.left, transform_map.y)).x - 1
+	var right = grid.local_to_map(Vector2(bounds.right, transform_map.y)).x + 1
+	var top = grid.local_to_map(Vector2(transform_map.x, bounds.top)).y - 1
+	var bottom = grid.local_to_map(Vector2(transform_map.x, bounds.bottom)).y + 1
 	
-	printt(left, right, top, bottom)
-	print(grid.local_to_map(get_global_mouse_position()))
+	#printt(left, right, top, bottom)
+	#print(grid.local_to_map(get_global_mouse_position()))
 	# Check top to bottom in the left most and right most if no board tiles
 	for i in range(top, bottom + 2): 
 		if (!grid.get_cell_tile_data(0, Vector2(left, i))):
 			grid.set_cell(0, Vector2(left, i), 0, Vector2i(0,0), 0)
+			grid.set_cell(1, Vector2(left, i), 1, Vector2i(0,0), 0)
 			
 		if (!grid.get_cell_tile_data(0, Vector2(right, i))):
 			grid.set_cell(0, Vector2(right, i), 0, Vector2i(0,0), 0)
+			grid.set_cell(1, Vector2(right, i), 1, Vector2i(0,0), 0)
 			
 	# Check left to right in the top most and bottom most if no board tiles
 	for i in range(left, right): 
 		if (!grid.get_cell_tile_data(0, Vector2(i, top))):
 			grid.set_cell(0, Vector2(i, top), 0, Vector2i(0,0), 0)
+			grid.set_cell(1, Vector2(i, top), 1, Vector2i(0,0), 0)
 			
 		if (!grid.get_cell_tile_data(0, Vector2(i, bottom))):
 			grid.set_cell(0, Vector2(i, bottom), 0, Vector2i(0,0), 0)
+			grid.set_cell(1, Vector2(i, bottom), 1, Vector2i(0,0), 0)
 			
 	# if (!grid.get_cell_tile_data(0,Vector2(i, transform_map.y))):
 
@@ -85,6 +91,10 @@ func get_visible_area_bounds():
 	}
 
 func _process(delta):
+	timer += delta
+	if timer > 2.0: # Prints every 2 seconds
+		timer = 0.0
+		print("fps: " + str(Engine.get_frames_per_second()))
 	pass
 	## Get bounds
 	# var bounds = get_visible_area_bounds()
