@@ -91,10 +91,10 @@ func get_visible_area_bounds():
 	}
 
 func _process(delta):
-	timer += delta
-	if timer > 2.0: # Prints every 2 seconds
-		timer = 0.0
-		print("fps: " + str(Engine.get_frames_per_second()))
+	# timer += delta
+	# if timer > 2.0: # Prints every 2 seconds
+	# 	timer = 0.0
+		# print("fps: " + str(Engine.get_frames_per_second()))
 	pass
 	## Get bounds
 	# var bounds = get_visible_area_bounds()

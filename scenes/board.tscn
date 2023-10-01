@@ -5,8 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://c6q1m5gofwdlx" path="res://assets/SelectedTile.png" id="2_3he7m"]
 [ext_resource type="Script" path="res://scripts/Grid.gd" id="4_daemk"]
 [ext_resource type="Script" path="res://scripts/BoardCam.gd" id="5_yu31x"]
-[ext_resource type="PackedScene" uid="uid://rq71e63onjhb" path="res://scenes/letter_tile.tscn" id="6_qhx62"]
-[ext_resource type="Script" path="res://scenes/HUD.gd" id="7_ql6gb"]
+[ext_resource type="Script" path="res://scenes/TilesOnBoard.gd" id="6_f6mda"]
+[ext_resource type="Script" path="res://scripts/HUD.gd" id="7_lgsjo"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_um5dk"]
 texture = ExtResource("1_wbbac")
@@ -45,23 +45,20 @@ script = ExtResource("4_daemk")
 script = ExtResource("5_yu31x")
 
 [node name="TilesOnBoard" type="Node2D" parent="."]
-
-[node name="LetterTile" parent="TilesOnBoard" instance=ExtResource("6_qhx62")]
-
-[node name="LetterTile2" parent="TilesOnBoard" instance=ExtResource("6_qhx62")]
-position = Vector2(128, 128)
+script = ExtResource("6_f6mda")
 
 [node name="HUD" type="CanvasLayer" parent="."]
-script = ExtResource("7_ql6gb")
+script = ExtResource("7_lgsjo")
 
 [node name="TextEdit" type="TextEdit" parent="HUD"]
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -79.0
-offset_right = -127.0
-offset_bottom = -45.0
+offset_left = 37.0
+offset_top = -75.0
+offset_right = -90.0
+offset_bottom = -41.0
 grow_horizontal = 2
 grow_vertical = 0
 
@@ -79,4 +76,5 @@ grow_horizontal = 0
 grow_vertical = 2
 text = "Submit"
 
+[connection signal="letter_selected" from="HUD" to="." method="_on_hud_letter_selected"]
 [connection signal="pressed" from="HUD/Button" to="HUD" method="_on_button_pressed"]
