@@ -1,6 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://rq71e63onjhb"]
 
-[ext_resource type="Texture2D" uid="uid://chum4k6ujrihh" path="res://assets/Tiles/FreeTile.png" id="1_w3was"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_4tb1m"]
+load_path = "res://.godot/imported/FreeTile.png-559f24474a907a94ae00dca514a0051a.ctex"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6uuwg"]
 size = Vector2(112, 112)
@@ -9,8 +10,7 @@ size = Vector2(112, 112)
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.065, 0.065)
-texture = ExtResource("1_w3was")
+texture = SubResource("CompressedTexture2D_4tb1m")
 centered = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

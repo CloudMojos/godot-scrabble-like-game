@@ -12,7 +12,7 @@ var drag_sensitivity: float = 0.5
 
 func _ready():
 	center_camera()
-	grid = get_node("../Grid")
+	grid = get_node("../BoardGrid")
 
 func center_camera():
 	screen_size = Vector2(0, 0)
