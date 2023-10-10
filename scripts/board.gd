@@ -185,26 +185,46 @@ func letter_from_tile_id(tile_id):
 func place_tile(tile_id, mouse_map_pos):
 	var x = mouse_map_pos.x
 	var y = mouse_map_pos.y
-	var wow
-	# Check if the letter is a start of a word
-	if(is_word_start(mouse_map_pos)):
-		# Check if it has letters in right or bottom
-		# Unshift the letter to the word instead (Append in first index)
+	# Check if the letter is a new word (meaning it attaches to no one :<)
+	if(is_word_new(mouse_map_pos)):
 		# Add it as new word
 		grid.words.append(selected_tile.letter)
 		# print(grid.words)
+	# Modify the words it affects (append, unshift)
 	else:
-		# "Stringify" the word in left or top
+		# "Stringify" the word in four directions
+		# Check if it has letters in right or bottom
+		# Because we gonna unshift the shit outta it
+		# This one is right
+		if (grid.get_cell_tile_data(2, Vector2(x + 1, y))):
+			if(!is_terminal_tile(Vector2(x - 1, y))):
+				var pos = find_terminal_pos(Vector2(x, y), Vector2(1, 0))
+				
+				var old_string = stringify(Vector2(x + 1, y), Vector2(1, 0))
+				var index = grid.words.find(old_string)
+				grid.words[index] = old_string + selected_tile.letter
+		# This one is bottom
+		if (grid.get_cell_tile_data(2, Vector2(x, y + 1))):
+			is_terminal_tile(Vector2(x, y - 1))
+			var old_string = stringify(Vector2(x, y + 1), Vector2(0, 1))
+			var index = grid.words.find(old_string)
+			grid.words[index] = old_string + selected_tile.letter
 		# If there's a tile in left then do the shit
 		if (grid.get_cell_tile_data(2, Vector2(x - 1, y))):
-			wow = stringify(Vector2(x - 1, y), Vector2(-1, 0))
-			wow += selected_tile.letter
+			is_terminal_tile(Vector2(x + 1, y))
+			var old_string = stringify(Vector2(x - 1, y), Vector2(-1, 0))
+			var index = grid.words.find(old_string)
+			grid.words[index] = old_string + selected_tile.letter
+		# This one is the right counterpart. Do the shit
+		if (grid.get_cell_tile_data(2, Vector2(x, y - 1))):
+			is_terminal_tile(Vector2(x , y + 1))
+			var old_string = stringify(Vector2(x, y - 1), Vector2(0, -1))
+			var index = grid.words.find(old_string)
+			grid.words[index] = old_string + selected_tile.letter
 		# Find the word in word array
 		# Append the letter
-	print(wow)
-	# Modify the words it affects (append, unshift)
+	print(grid.words)
 	pass
-	
 # Recursive method that creates the string in the given direction
 # It's recursive so I'm proud of it :>
 func stringify(coord, direction):
@@ -218,11 +238,20 @@ func stringify(coord, direction):
 	else:
 		return stringify(coord + direction, direction) + letter
 
-func is_word_start(mouse_map_pos):
-	var x = mouse_map_pos.x
-	var y = mouse_map_pos.y
+func is_terminal_tile(pos):
+	return !grid.get_cell_tile_data(2, pos)
+	
+func find_terminal_pos(pos, direction):
+	
+	pass
+
+func is_word_new(pos):
+	var x = pos.x
+	var y = pos.y
 	if (!grid.get_cell_tile_data(2, Vector2(x, y - 1)) &&
-	!grid.get_cell_tile_data(2, Vector2(x - 1, y))):
+	!grid.get_cell_tile_data(2, Vector2(x - 1, y)) &&
+	!grid.get_cell_tile_data(2, Vector2(x + 1, y)) &&
+	!grid.get_cell_tile_data(2, Vector2(x, y + 1))):
 		return true
 	return false
 	
