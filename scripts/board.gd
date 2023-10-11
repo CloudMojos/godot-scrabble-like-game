@@ -162,7 +162,7 @@ func _unhandled_input(event):
 				# print(letter_from_tile_id(hehe))
 				return
 			# find the id of the letter
-			var id = tile_id_from_letter(selected_tile.letter)
+			var id = grid.tile_id_from_letter(selected_tile.letter)
 			# place the tile visually in board
 			place_tile(id, mouse_map_pos)
 			grid.set_cell(2, mouse_map_pos, id, Vector2i(0, 0), 0)
@@ -170,78 +170,73 @@ func _unhandled_input(event):
 			selected_tile = {}
 			return
 
-func tile_id_from_letter(letter):
-	for i in range(0, grid.tile_set.get_source_count()):
-				if (grid.tile_set.get_source(i).resource_name == selected_tile.letter):
-					return i
-	return -1
 
-func letter_from_tile_id(tile_id):
-	for i in range(0, grid.tile_set.get_source_count()):
-				if (i == tile_id):
-					return grid.tile_set.get_source(i).resource_name
-	return null
 
 func place_tile(tile_id, mouse_map_pos):
 	var x = mouse_map_pos.x
 	var y = mouse_map_pos.y
+	
+	grid.tiles_in_board[mouse_map_pos] = selected_tile.letter
+	
+	# print(grid.tiles_in_board)
+	
 	# Check if the letter is a new word (meaning it attaches to no one :<)
-	if(is_word_new(mouse_map_pos)):
-		# Add it as new word
-		grid.words.append(selected_tile.letter)
-		# print(grid.words)
+	#if(is_word_new(mouse_map_pos)):
+	#	# Add it as new word
+	#	grid.words.append(selected_tile.letter)
+	#	# print(grid.words)
 	# Modify the words it affects (append, unshift)
-	else:
+	#else:
 		# "Stringify" the word in four directions
 		# Check if it has letters in right or bottom
 		# Because we gonna unshift the shit outta it
 		# This one is right
-		if (grid.get_cell_tile_data(2, Vector2(x + 1, y))):
-			if(!is_terminal_tile(Vector2(x - 1, y))):
-				var pos = find_terminal_pos(Vector2(x, y), Vector2(-1, 0))
-				print("right")
-				print(pos)
-				
-			var old_string = stringify(Vector2(x + 1, y), Vector2(1, 0))
-			var index = grid.words.find(old_string)
-			grid.words[index] = selected_tile.letter + old_string
-		# This one is bottom
-		if (grid.get_cell_tile_data(2, Vector2(x, y + 1))):
-			if(!is_terminal_tile(Vector2(x, y - 1))):
-				var pos = find_terminal_pos(Vector2(x, y), Vector2(0, -1))
-				print("bottom")
-				print(pos)
-				
-			var old_string = stringify(Vector2(x, y + 1), Vector2(0, 1))
-			var index = grid.words.find(old_string)
-			grid.words[index] = selected_tile.letter + old_string
-		# If there's a tile in left then do the shit
-		if (grid.get_cell_tile_data(2, Vector2(x - 1, y))):
-			if(!is_terminal_tile(Vector2(x + 1, y))):
-				var pos = find_terminal_pos(Vector2(x, y), Vector2(1, 0))
-				print("left")
-				print(pos)
-			var old_string = stringify(Vector2(x - 1, y), Vector2(-1, 0))
-			var index = grid.words.find(old_string)
-			grid.words[index] = old_string + selected_tile.letter
-		# This one is the top counterpart. Do the shit
-		if (grid.get_cell_tile_data(2, Vector2(x, y - 1))):
-			if(!is_terminal_tile(Vector2(x, y + 1))):
-				var pos = find_terminal_pos(Vector2(x, y), Vector2(0, 1))
-				print("top")
-				print(pos)
-			var old_string = stringify(Vector2(x, y - 1), Vector2(0, -1))
-			var index = grid.words.find(old_string)
-			grid.words[index] = old_string + selected_tile.letter
-		# Find the word in word array
+	#	if (grid.get_cell_tile_data(2, Vector2(x + 1, y))):
+	#		if(!is_terminal_tile(Vector2(x - 1, y))):
+	#			var pos = find_terminal_pos(Vector2(x, y), Vector2(-1, 0))
+	#			print("right")
+	#			print(pos)
+	#			
+	#		var old_string = stringify(Vector2(x + 1, y), Vector2(1, 0))
+	#		var index = grid.words.find(old_string)
+	#		grid.words[index] = selected_tile.letter + old_string
+	#	# This one is bottom
+	#	if (grid.get_cell_tile_data(2, Vector2(x, y + 1))):
+	#		if(!is_terminal_tile(Vector2(x, y - 1))):
+	#			var pos = find_terminal_pos(Vector2(x, y), Vector2(0, -1))
+	#			print("bottom")
+	#			print(pos)
+	#			
+	#		var old_string = stringify(Vector2(x, y + 1), Vector2(0, 1))
+	#		var index = grid.words.find(old_string)
+	#		grid.words[index] = selected_tile.letter + old_string
+	#	# If there's a tile in left then do the shit
+	#	if (grid.get_cell_tile_data(2, Vector2(x - 1, y))):
+	#		if(!is_terminal_tile(Vector2(x + 1, y))):
+	#			var pos = find_terminal_pos(Vector2(x, y), Vector2(1, 0))
+	#			print("left")
+	#			print(pos)
+	#		var old_string = stringify(Vector2(x - 1, y), Vector2(-1, 0))
+	#		var index = grid.words.find(old_string)
+	#		grid.words[index] = old_string + selected_tile.letter
+	#	# This one is the top counterpart. Do the shit
+	#	if (grid.get_cell_tile_data(2, Vector2(x, y - 1))):
+	#		if(!is_terminal_tile(Vector2(x, y + 1))):
+	#			var pos = find_terminal_pos(Vector2(x, y), Vector2(0, 1))
+	#			print("top")
+	#			print(pos)
+	#		var old_string = stringify(Vector2(x, y - 1), Vector2(0, -1))
+	#		var index = grid.words.find(old_string)
+	#		grid.words[index] = old_string + selected_tile.letter
+	#	# Find the word in word array
 		# Append the letter
-	print(grid.words)
+	# print(grid.words)
 	pass
 # Recursive method that creates the string in the given direction
 # It's recursive so I'm proud of it :>
 func stringify(coord, direction):
 	var id = grid.get_cell_source_id(2, coord)
-	var letter =  letter_from_tile_id(id)
+	var letter =  grid.letter_from_tile_id(id)
 	# Base case
 	# If there is no more tile in left or top
 	# In other words, if this is the leftmost or topmost
@@ -269,7 +264,8 @@ func is_word_new(pos):
 	!grid.get_cell_tile_data(2, Vector2(x, y + 1))):
 		return true
 	return false
-	
+
+
 ## Signal from the UI
 func _on_hud_letter_selected(letter):
 	## Instantiate a tile using the letter
@@ -278,4 +274,13 @@ func _on_hud_letter_selected(letter):
 	selected_tile.node.get_node("Sprite2D").texture = tile_info.texture
 	selected_tile.letter = letter
 
-
+func _on_round_end():
+	# var horizontal_words = grid.find_horizontal_words()
+	# var vertical_words = grid.find_vertical_words()
+	var horizontal_words = grid.find_horizontal_words()
+	var vertical_words = grid.find_vertical_words()
+	
+	grid.words = horizontal_words + vertical_words
+	print("")
+	print(grid.words)
+	pass # Replace with function body.

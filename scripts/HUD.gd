@@ -24,4 +24,4 @@ func _on_button_pressed():
 	letter_selected.emit(letter)
 	
 func clear_text_edit():
-	$TextEdit.text == 'adsf'
+	$TextEdit.text = ''
