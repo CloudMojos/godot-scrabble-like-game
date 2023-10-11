@@ -12,6 +12,7 @@ var drag_sensitivity: float = 0.5
 
 func _ready():
 	center_camera()
+	zoom = Vector2(0.5, 0.5)
 	grid = get_node("../BoardGrid")
 
 func center_camera():

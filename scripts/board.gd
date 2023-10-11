@@ -198,26 +198,38 @@ func place_tile(tile_id, mouse_map_pos):
 		# This one is right
 		if (grid.get_cell_tile_data(2, Vector2(x + 1, y))):
 			if(!is_terminal_tile(Vector2(x - 1, y))):
-				var pos = find_terminal_pos(Vector2(x, y), Vector2(1, 0))
+				var pos = find_terminal_pos(Vector2(x, y), Vector2(-1, 0))
+				print("right")
+				print(pos)
 				
-				var old_string = stringify(Vector2(x + 1, y), Vector2(1, 0))
-				var index = grid.words.find(old_string)
-				grid.words[index] = old_string + selected_tile.letter
+			var old_string = stringify(Vector2(x + 1, y), Vector2(1, 0))
+			var index = grid.words.find(old_string)
+			grid.words[index] = selected_tile.letter + old_string
 		# This one is bottom
 		if (grid.get_cell_tile_data(2, Vector2(x, y + 1))):
-			is_terminal_tile(Vector2(x, y - 1))
+			if(!is_terminal_tile(Vector2(x, y - 1))):
+				var pos = find_terminal_pos(Vector2(x, y), Vector2(0, -1))
+				print("bottom")
+				print(pos)
+				
 			var old_string = stringify(Vector2(x, y + 1), Vector2(0, 1))
 			var index = grid.words.find(old_string)
-			grid.words[index] = old_string + selected_tile.letter
+			grid.words[index] = selected_tile.letter + old_string
 		# If there's a tile in left then do the shit
 		if (grid.get_cell_tile_data(2, Vector2(x - 1, y))):
-			is_terminal_tile(Vector2(x + 1, y))
+			if(!is_terminal_tile(Vector2(x + 1, y))):
+				var pos = find_terminal_pos(Vector2(x, y), Vector2(1, 0))
+				print("left")
+				print(pos)
 			var old_string = stringify(Vector2(x - 1, y), Vector2(-1, 0))
 			var index = grid.words.find(old_string)
 			grid.words[index] = old_string + selected_tile.letter
-		# This one is the right counterpart. Do the shit
+		# This one is the top counterpart. Do the shit
 		if (grid.get_cell_tile_data(2, Vector2(x, y - 1))):
-			is_terminal_tile(Vector2(x , y + 1))
+			if(!is_terminal_tile(Vector2(x, y + 1))):
+				var pos = find_terminal_pos(Vector2(x, y), Vector2(0, 1))
+				print("top")
+				print(pos)
 			var old_string = stringify(Vector2(x, y - 1), Vector2(0, -1))
 			var index = grid.words.find(old_string)
 			grid.words[index] = old_string + selected_tile.letter
@@ -241,9 +253,12 @@ func stringify(coord, direction):
 func is_terminal_tile(pos):
 	return !grid.get_cell_tile_data(2, pos)
 	
+# OwO another recursive function!?
 func find_terminal_pos(pos, direction):
-	
-	pass
+	if (!grid.get_cell_tile_data(2, pos + direction)):
+		return pos
+	else:
+		return find_terminal_pos(pos + direction, direction)
 
 func is_word_new(pos):
 	var x = pos.x
