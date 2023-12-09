@@ -8,6 +8,7 @@ var board_cam
 var letter_tile_node = preload("res://scenes/letter_tile.tscn")
 var player_tiles  # Tiles available for the player
 var selected_tile = {}
+var requests = []
 
 var letter_a_texture_sample = preload("res://assets/Tiles/Letter-A.png")
 
@@ -122,7 +123,6 @@ var tile_info_dict = {
 	}
 }
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	grid = get_node("BoardGrid")
@@ -151,32 +151,32 @@ func _process(delta):
 		selected_tile.node.position = grid.map_to_local(local_mouse_pos) - Vector2(grid.tile_set.tile_size) / 2
 
 func _unhandled_input(event):
+	## !IMPORTANT
 	if event is InputEventMouseButton:
+			## Search for unhandle input event hold if there is any
 		if event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed() and selected_tile:
 			# Mouse in tilemap position
 			var mouse_map_pos = grid.local_to_map(get_global_mouse_position())
-			# Check if there's already a tile in there
-			if (grid.get_cell_tile_data(2, mouse_map_pos)):
-				var hehe = grid.get_cell_source_id(2, mouse_map_pos)
-				# print(hehe)
-				# print(letter_from_tile_id(hehe))
-				return
 			# find the id of the letter
 			var id = grid.tile_id_from_letter(selected_tile.letter)
 			# place the tile visually in board
 			place_tile(id, mouse_map_pos)
-			grid.set_cell(2, mouse_map_pos, id, Vector2i(0, 0), 0)
-			#
-			selected_tile = {}
 			return
-
-
 
 func place_tile(tile_id, mouse_map_pos):
 	var x = mouse_map_pos.x
 	var y = mouse_map_pos.y
+
+	# Check if there's already a tile in there
+	if (grid.get_cell_tile_data(2, mouse_map_pos)):
+		var hehe = grid.get_cell_source_id(2, mouse_map_pos)
+		# print(hehe)
+		# print(letter_from_tile_id(hehe))
+		return
 	
 	grid.tiles_in_board[mouse_map_pos] = selected_tile.letter
+	grid.set_cell(2, mouse_map_pos, tile_id, Vector2i(0, 0), 0)
+	selected_tile = {}
 	
 	# print(grid.tiles_in_board)
 	
@@ -232,7 +232,9 @@ func place_tile(tile_id, mouse_map_pos):
 		# Append the letter
 	# print(grid.words)
 	pass
+	
 # Recursive method that creates the string in the given direction
+## Word Validation Helper Functions
 # It's recursive so I'm proud of it :>
 func stringify(coord, direction):
 	var id = grid.get_cell_source_id(2, coord)
@@ -274,7 +276,7 @@ func _on_hud_letter_selected(letter):
 	selected_tile.node.get_node("Sprite2D").texture = tile_info.texture
 	selected_tile.letter = letter
 
-func _on_round_end():
+func find_definitions():
 	# var horizontal_words = grid.find_horizontal_words()
 	# var vertical_words = grid.find_vertical_words()
 	var horizontal_words = grid.find_horizontal_words()
@@ -283,4 +285,35 @@ func _on_round_end():
 	grid.words = horizontal_words + vertical_words
 	print("")
 	print(grid.words)
-	pass # Replace with function body.
+	for word in grid.words:
+		print(word)
+		# create new http request
+		var new_request = HTTPRequest.new()
+		add_child(new_request)
+		requests.append(new_request)
+		# request
+		new_request.request("https://api.dictionaryapi.dev/api/v2/entries/en/" + word)
+		new_request.request_completed.connect(_on_request_completed)
+	
+		
+
+func _on_round_end():
+	find_definitions()
+
+func _on_request_completed(result, response_code, headers, body):
+	var json = JSON.parse_string(body.get_string_from_utf8())
+	if result != HTTPRequest.RESULT_SUCCESS:
+		print(result)
+		return
+	
+	print("json")
+	print(json[0])
+	
+	var node = get_node(requests[0].to_string())
+	node.disconnect("request_completed", _on_request_completed)
+	node.queue_free()
+	requests.pop_front()
+
+
+func _on_timer_timeout():
+	find_definitions()

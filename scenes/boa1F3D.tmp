@@ -277,7 +277,7 @@ tile_set = SubResource("TileSet_8nxl7")
 cell_quadrant_size = 128
 format = 2
 layer_0/name = "Background"
-layer_0/tile_data = PackedInt32Array(0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 65536, 0, 0, 65537, 0, 0, 65538, 0, 0, 65539, 0, 0, 131072, 0, 0, 131073, 0, 0, 131075, 0, 0, 196608, 0, 0, 196609, 0, 0, 196610, 0, 0, 262144, 0, 0, 262145, 0, 0, 262146, 0, 0, 262147, 0, 0, 327681, 0, 0, 327682, 0, 0, 327683, 0, 0, 327684, 0, 0, 262148, 0, 0, 196612, 0, 0, 131076, 0, 0, 65540, 0, 0, 4, 0, 0, -65532, 0, 0, -65533, 0, 0, -65534, 0, 0, -65535, 0, 0, -65536, 0, 0, -1, 0, 0, 65535, 0, 0, 131071, 0, 0, 196607, 0, 0, 262143, 0, 0, 327679, 0, 0, 393215, 0, 0, 327680, 0, 0, -131067, 0, 0, -131068, 0, 0, -131069, 0, 0, -131070, 0, 0, -131071, 0, 0, -131072, 0, 0, -65537, 0, 0, -196603, 0, 0, -196604, 0, 0, -196605, 0, 0, -196606, 0, 0, -196607, 0, 0, -196608, 0, 0, -131073, 0, 0, -131074, 0, 0, -131075, 0, 0, -65539, 0, 0, -3, 0, 0, 65533, 0, 0, 131069, 0, 0, 196605, 0, 0, -65538, 0, 0, -2, 0, 0, 65534, 0, 0, 131070, 0, 0, 196606, 0, 0, 262142, 0, 0, 327678, 0, 0, 393214, 0, 0, 262141, 0, 0, 327677, 0, 0, 393213, 0, 0, 458749, 0, 0, 458750, 0, 0, 458751, 0, 0, 393216, 0, 0, 393217, 0, 0, 393218, 0, 0, 393219, 0, 0, 393220, 0, 0, 393221, 0, 0, -65531, 0, 0, 5, 0, 0, 65541, 0, 0, 131077, 0, 0, 196613, 0, 0, 262149, 0, 0, 327685, 0, 0, -262139, 0, 0, -262140, 0, 0, -262141, 0, 0, -262142, 0, 0, -262143, 0, 0, -262144, 0, 0, -196609, 0, 0, -196610, 0, 0, -196611, 0, 0, 524285, 0, 0, 524286, 0, 0, 524287, 0, 0, 458752, 0, 0, 458753, 0, 0, 458754, 0, 0, 458755, 0, 0, 458756, 0, 0, 458757, 0, 0, 196611, 0, 0, 131074, 0, 0)
+layer_0/tile_data = PackedInt32Array(0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 65536, 0, 0, 65537, 0, 0, 65538, 0, 0, 65539, 0, 0, 131072, 0, 0, 131073, 0, 0, 131074, 0, 0, 131075, 0, 0, 196608, 0, 0, 196609, 0, 0, 196610, 0, 0, 196611, 0, 0, 262144, 0, 0, 262145, 0, 0, 262146, 0, 0, 262147, 0, 0, 327681, 0, 0, 327682, 0, 0, 327683, 0, 0, 327684, 0, 0, 262148, 0, 0, 196612, 0, 0, 131076, 0, 0, 65540, 0, 0, 4, 0, 0, -65532, 0, 0, -65533, 0, 0, -65534, 0, 0, -65535, 0, 0, -65536, 0, 0, -1, 0, 0, 65535, 0, 0, 131071, 0, 0, 196607, 0, 0, 262143, 0, 0, 327679, 0, 0, 393215, 0, 0, 327680, 0, 0, -131067, 0, 0, -131068, 0, 0, -131069, 0, 0, -131070, 0, 0, -131071, 0, 0, -131072, 0, 0, -65537, 0, 0, -196603, 0, 0, -196604, 0, 0, -196605, 0, 0, -196606, 0, 0, -196607, 0, 0, -196608, 0, 0, -131073, 0, 0, -131074, 0, 0, -131075, 0, 0, -65539, 0, 0, -3, 0, 0, 65533, 0, 0, 131069, 0, 0, 196605, 0, 0, -65538, 0, 0, -2, 0, 0, 65534, 0, 0, 131070, 0, 0, 196606, 0, 0, 262142, 0, 0, 327678, 0, 0, 393214, 0, 0, 262141, 0, 0, 327677, 0, 0, 393213, 0, 0, 458749, 0, 0, 458750, 0, 0, 458751, 0, 0, 393216, 0, 0, 393217, 0, 0, 393218, 0, 0, 393219, 0, 0, 393220, 0, 0, 393221, 0, 0, -65531, 0, 0, 5, 0, 0, 65541, 0, 0, 131077, 0, 0, 196613, 0, 0, 262149, 0, 0, 327685, 0, 0, -262139, 0, 0, -262140, 0, 0, -262141, 0, 0, -262142, 0, 0, -262143, 0, 0, -262144, 0, 0, -196609, 0, 0, -196610, 0, 0, -196611, 0, 0, 524285, 0, 0, 524286, 0, 0, 524287, 0, 0, 458752, 0, 0, 458753, 0, 0, 458754, 0, 0, 458755, 0, 0, 458756, 0, 0, 458757, 0, 0)
 layer_1/name = "Borders"
 layer_1/enabled = true
 layer_1/modulate = Color(1, 1, 1, 0.537255)
@@ -291,7 +291,7 @@ layer_2/modulate = Color(1, 1, 1, 1)
 layer_2/y_sort_enabled = false
 layer_2/y_sort_origin = 0
 layer_2/z_index = 2
-layer_2/tile_data = PackedInt32Array(131073, 4, 0, 65537, 3, 0, 65538, 2, 0)
+layer_2/tile_data = PackedInt32Array()
 script = ExtResource("4_k4dd1")
 
 [node name="BoardCam" type="Camera2D" parent="."]
@@ -300,47 +300,44 @@ script = ExtResource("5_yu31x")
 [node name="TilesOnBoard" type="Node2D" parent="."]
 script = SubResource("GDScript_ndudj")
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 15.0
-one_shot = true
-autostart = true
+[node name="HUD" type="CanvasLayer" parent="."]
+script = ExtResource("7_lgsjo")
 
-[node name="TilePanel" type="CanvasLayer" parent="."]
+[node name="TextEdit" type="TextEdit" parent="HUD"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 37.0
+offset_top = -75.0
+offset_right = -90.0
+offset_bottom = -41.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Button" type="Button" parent="HUD"]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -127.0
+offset_top = 151.0
+offset_right = -24.0
+offset_bottom = 189.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "Submit"
+
+[node name="Button2" type="Button" parent="HUD"]
+offset_left = 37.0
+offset_top = 475.0
+offset_right = 129.0
+offset_bottom = 506.0
+text = "End Round"
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="HUD" type="CanvasLayer" parent="Control"]
-script = ExtResource("7_lgsjo")
-
-[node name="TextEdit" type="TextEdit" parent="Control/HUD"]
-offset_left = 37.0
-offset_top = 573.0
-offset_right = 435.0
-offset_bottom = 625.0
-size_flags_vertical = 8
-
-[node name="Button" type="Button" parent="Control/HUD"]
-offset_left = 370.0
-offset_top = 515.0
-offset_right = 433.0
-offset_bottom = 555.0
-size_flags_horizontal = 0
-text = "Submit"
-
-[node name="Button2" type="Button" parent="Control/HUD"]
-offset_left = 37.0
-offset_top = 515.0
-offset_right = 129.0
-offset_bottom = 555.0
-text = "End Round"
-
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
-[connection signal="letter_selected" from="Control/HUD" to="." method="_on_hud_letter_selected"]
-[connection signal="pressed" from="Control/HUD/Button" to="Control/HUD" method="_on_button_pressed"]
-[connection signal="pressed" from="Control/HUD/Button2" to="." method="_on_round_end"]
+[connection signal="letter_selected" from="HUD" to="." method="_on_hud_letter_selected"]
+[connection signal="pressed" from="HUD/Button" to="HUD" method="_on_button_pressed"]
+[connection signal="pressed" from="HUD/Button2" to="." method="_on_round_end"]
