@@ -315,17 +315,18 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="HUD" type="CanvasLayer" parent="Control"]
+[node name="Sample" type="CanvasLayer" parent="Control"]
+visible = false
 script = ExtResource("7_lgsjo")
 
-[node name="TextEdit" type="TextEdit" parent="Control/HUD"]
+[node name="TextEdit" type="TextEdit" parent="Control/Sample"]
 offset_left = 37.0
 offset_top = 573.0
 offset_right = 435.0
 offset_bottom = 625.0
 size_flags_vertical = 8
 
-[node name="Button" type="Button" parent="Control/HUD"]
+[node name="Button" type="Button" parent="Control/Sample"]
 offset_left = 370.0
 offset_top = 515.0
 offset_right = 433.0
@@ -333,14 +334,93 @@ offset_bottom = 555.0
 size_flags_horizontal = 0
 text = "Submit"
 
-[node name="Button2" type="Button" parent="Control/HUD"]
+[node name="Button2" type="Button" parent="Control/Sample"]
 offset_left = 37.0
 offset_top = 515.0
 offset_right = 129.0
 offset_bottom = 555.0
 text = "End Round"
 
+[node name="HUD" type="CanvasLayer" parent="Control"]
+
+[node name="GridContainer" type="GridContainer" parent="Control/HUD"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -123.0
+offset_right = 53.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.9, 0.9)
+columns = 4
+
+[node name="Control" type="Control" parent="Control/HUD/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+
+[node name="Tile1" type="TextureRect" parent="Control/HUD/GridContainer/Control"]
+layout_mode = 2
+offset_left = -51.2
+offset_top = -51.2
+offset_right = 76.8
+offset_bottom = 76.8
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("26_ykwy0")
+
+[node name="Control2" type="Control" parent="Control/HUD/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+
+[node name="Tile1" type="TextureRect" parent="Control/HUD/GridContainer/Control2"]
+layout_mode = 2
+offset_left = -51.2
+offset_top = -51.2
+offset_right = 76.8
+offset_bottom = 76.8
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("6_7llym")
+
+[node name="Control3" type="Control" parent="Control/HUD/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+
+[node name="Tile1" type="TextureRect" parent="Control/HUD/GridContainer/Control3"]
+layout_mode = 2
+offset_left = -51.2
+offset_top = -51.2
+offset_right = 76.8
+offset_bottom = 76.8
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("6_7llym")
+
+[node name="Control4" type="Control" parent="Control/HUD/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+
+[node name="Tile1" type="TextureRect" parent="Control/HUD/GridContainer/Control4"]
+layout_mode = 2
+offset_left = -51.2
+offset_top = -51.2
+offset_right = 76.8
+offset_bottom = 76.8
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("6_7llym")
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
-[connection signal="letter_selected" from="Control/HUD" to="." method="_on_hud_letter_selected"]
-[connection signal="pressed" from="Control/HUD/Button" to="Control/HUD" method="_on_button_pressed"]
-[connection signal="pressed" from="Control/HUD/Button2" to="." method="_on_round_end"]
+[connection signal="letter_selected" from="Control/Sample" to="." method="_on_hud_letter_selected"]
+[connection signal="pressed" from="Control/Sample/Button" to="Control/Sample" method="_on_button_pressed"]
+[connection signal="pressed" from="Control/Sample/Button2" to="." method="_on_round_end"]
