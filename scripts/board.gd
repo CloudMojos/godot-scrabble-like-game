@@ -3,122 +3,263 @@ extends Node2D
 # Node Handles
 var grid
 var board_cam
+var game_manager
+var trie_dict
 
 # Tile Specific Handles
 var letter_tile_node = preload("res://scenes/letter_tile.tscn")
+
 var player_tiles  # Tiles available for the player
 var selected_tile = {}
 var requests = []
 
 var letter_a_texture_sample = preload("res://assets/Tiles/Letter-A.png")
 
+# var tile_info_dict = {
+	#"?" : {
+		#"points" : 2,
+		#"texture" : preload("res://assets/Tiles/FreeTile.png")
+	#},
+	#"A" : {
+		#"points" : 2,
+		#"texture" : preload("res://assets/Tiles/Letter-A.png")
+	#},
+	#"B" : {
+		#"points" : 4,
+		#"texture" : preload("res://assets/Tiles/Letter-B.png")
+	#},
+	#"C" : {
+		#"points" : 4,
+		#"texture" : preload("res://assets/Tiles/Letter-C.png")
+	#},
+	#"D" : {
+		#"points" : 3,
+		#"texture" : preload("res://assets/Tiles/Letter-D.png")
+	#},
+	#"E" : {
+		#"points" : 2,
+		#"texture" : preload("res://assets/Tiles/Letter-E.png")
+	#},
+	#"F" : {
+		#"points" : 5,
+		#"texture" : preload("res://assets/Tiles/Letter-F.png")
+	#},
+	#"G" : {
+		#"points" : 3,
+		#"texture" : preload("res://assets/Tiles/Letter-G.png")
+	#},
+	#"H" : {
+		#"points" : 5,
+		#"texture" : preload("res://assets/Tiles/Letter-H.png")
+	#},
+	#"I" : {
+		#"points" : 2,
+		#"texture" : preload("res://assets/Tiles/Letter-I.png")
+	#},
+	#"J" : {
+		#"points" : 9,
+		#"texture" : preload("res://assets/Tiles/Letter-J.png")
+	#},
+	#"K" : {
+		#"points" : 6,
+		#"texture" : preload("res://assets/Tiles/Letter-K.png")
+	#},
+	#"L" : {
+		#"points" : 3,
+		#"texture" : preload("res://assets/Tiles/Letter-L.png")
+	#},
+	#"M" : {
+		#"points" : 4,
+		#"texture" : preload("res://assets/Tiles/Letter-M.png")
+	#},
+	#"N" : {
+		#"points" : 3,
+		#"texture" : preload("res://assets/Tiles/Letter-N.png")
+	#},
+	#"O": {
+		#"points": 2,
+		#"texture": preload("res://assets/Tiles/Letter-O.png")
+	#},
+	#"P": {
+		#"points": 4,
+		#"texture": preload("res://assets/Tiles/Letter-P.png")
+	#},
+	#"Q": {
+		#"points": 12,
+		#"texture": preload("res://assets/Tiles/Letter-Q.png")
+	#},
+	#"R": {
+		#"points": 3,
+		#"texture": preload("res://assets/Tiles/Letter-R.png")
+	#},
+	#"S": {
+		#"points": 2,
+		#"texture": preload("res://assets/Tiles/Letter-S.png")
+	#},
+	#"T": {
+		#"points": 3,
+		#"texture": preload("res://assets/Tiles/Letter-T.png")
+	#},
+	#"U": {
+		#"points": 2,
+		#"texture": preload("res://assets/Tiles/Letter-U.png")
+	#},
+	#"V": {
+		#"points": 5,
+		#"texture": preload("res://assets/Tiles/Letter-V.png")
+	#},
+	#"W": {
+		#"points": 5,
+		#"texture": preload("res://assets/Tiles/Letter-W.png")
+	#},
+	#"X": {
+		#"points": 10,
+		#"texture": preload("res://assets/Tiles/Letter-X.png")
+	#},
+	#"Y": {
+		#"points": 5,
+		#"texture": preload("res://assets/Tiles/Letter-Y.png")
+	#},
+	#"Z": {
+		#"points": 12,
+		#"texture": preload("res://assets/Tiles/Letter-Z.png")
+	#}
+#}
+
 var tile_info_dict = {
-	"?" : {
+	"FreeTile" : {
+		"letter" : '?',
 		"points" : 2,
 		"texture" : preload("res://assets/Tiles/FreeTile.png")
 	},
-	"A" : {
-		"points" : 2,
+	"Letter-A" : {
+		"letter" : 'A', 
+		"points" : 1,
 		"texture" : preload("res://assets/Tiles/Letter-A.png")
 	},
-	"B" : {
-		"points" : 4,
+	"Letter-B" : {
+		"letter" : 'B',  
+		"points" : 3,
 		"texture" : preload("res://assets/Tiles/Letter-B.png")
 	},
-	"C" : {
-		"points" : 4,
+	"Letter-C" : {
+		"letter" : 'C',
+		"points" : 3,
 		"texture" : preload("res://assets/Tiles/Letter-C.png")
 	},
-	"D" : {
-		"points" : 3,
+	"Letter-D" : {
+		"letter" : 'D',
+		"points" : 2,
 		"texture" : preload("res://assets/Tiles/Letter-D.png")
 	},
-	"E" : {
-		"points" : 2,
+	"Letter-E" : {
+		"letter" : 'E',
+		"points" : 1,
 		"texture" : preload("res://assets/Tiles/Letter-E.png")
 	},
-	"F" : {
-		"points" : 5,
+	"Letter-F" : {
+		"letter" : 'F',
+		"points" : 4,
 		"texture" : preload("res://assets/Tiles/Letter-F.png")
 	},
-	"G" : {
-		"points" : 3,
+	"Letter-G" : {
+		"letter" : 'G',
+		"points" : 2,
 		"texture" : preload("res://assets/Tiles/Letter-G.png")
 	},
-	"H" : {
-		"points" : 5,
+	"Letter-H" : {
+		"letter" : 'H',
+		"points" : 4,
 		"texture" : preload("res://assets/Tiles/Letter-H.png")
 	},
-	"I" : {
-		"points" : 2,
+	"Letter-I" : {
+		"letter" : 'I',
+		"points" : 1,
 		"texture" : preload("res://assets/Tiles/Letter-I.png")
 	},
-	"J" : {
-		"points" : 9,
+	"Letter-J" : {
+		"letter" : 'J',
+		"points" : 8,
 		"texture" : preload("res://assets/Tiles/Letter-J.png")
 	},
-	"K" : {
-		"points" : 6,
+	"Letter-K" : {
+		"letter" : 'K',
+		"points" : 5,
 		"texture" : preload("res://assets/Tiles/Letter-K.png")
 	},
-	"L" : {
-		"points" : 3,
+	"Letter-L" : {
+		"letter" : 'L',
+		"points" : 2,
 		"texture" : preload("res://assets/Tiles/Letter-L.png")
 	},
-	"M" : {
-		"points" : 4,
+	"Letter-M" : {
+		"letter" : 'M',
+		"points" : 3,
 		"texture" : preload("res://assets/Tiles/Letter-M.png")
 	},
-	"N" : {
-		"points" : 3,
+	"Letter-N" : {
+		"letter" : 'N',
+		"points" : 2,
 		"texture" : preload("res://assets/Tiles/Letter-N.png")
 	},
-	"O": {
-		"points": 2,
+	"Letter-O": {
+		"letter" : 'O',
+		"points": 1,
 		"texture": preload("res://assets/Tiles/Letter-O.png")
 	},
-	"P": {
-		"points": 4,
+	"Letter-P": {
+		"letter" : 'P',
+		"points": 3,
 		"texture": preload("res://assets/Tiles/Letter-P.png")
 	},
-	"Q": {
-		"points": 12,
+	"Letter-Q": {
+		"letter" : 'Q',
+		"points": 10,
 		"texture": preload("res://assets/Tiles/Letter-Q.png")
 	},
-	"R": {
-		"points": 3,
+	"Letter-R": {
+		"letter" : 'R',
+		"points": 2,
 		"texture": preload("res://assets/Tiles/Letter-R.png")
 	},
-	"S": {
-		"points": 2,
+	"Letter-S": {
+		"letter" : 'S',
+		"points": 1,
 		"texture": preload("res://assets/Tiles/Letter-S.png")
 	},
-	"T": {
-		"points": 3,
+	"Letter-T": {
+		"letter" : 'T',
+		"points": 2,
 		"texture": preload("res://assets/Tiles/Letter-T.png")
 	},
-	"U": {
-		"points": 2,
+	"Letter-U": {
+		"letter" : 'U',
+		"points": 1,
 		"texture": preload("res://assets/Tiles/Letter-U.png")
 	},
-	"V": {
-		"points": 5,
+	"Letter-V": {
+		"letter" : 'V',
+		"points": 4,
 		"texture": preload("res://assets/Tiles/Letter-V.png")
 	},
-	"W": {
-		"points": 5,
+	"Letter-W": {
+		"letter" : 'W',
+		"points": 4,
 		"texture": preload("res://assets/Tiles/Letter-W.png")
 	},
-	"X": {
-		"points": 10,
+	"Letter-X": {
+		"letter" : 'X',
+		"points": 8,
 		"texture": preload("res://assets/Tiles/Letter-X.png")
 	},
-	"Y": {
-		"points": 5,
+	"Letter-Y": {
+		"letter" : 'Y',
+		"points": 4,
 		"texture": preload("res://assets/Tiles/Letter-Y.png")
 	},
-	"Z": {
-		"points": 12,
+	"Letter-Z": {
+		"letter" : 'Z',
+		"points": 10,
 		"texture": preload("res://assets/Tiles/Letter-Z.png")
 	}
 }
@@ -127,6 +268,11 @@ var tile_info_dict = {
 func _ready():
 	grid = get_node("BoardGrid")
 	board_cam = get_node("BoardCam")
+	game_manager = $GameStateManager
+	trie_dict = Global.trie
+	
+	trie_dict.simple_search("etits")
+	game_manager.game_start()
 	# player_tiles = [tile_dict_info_template]
 	# selected_tile = letter_tile_node.instantiate()
 	# print(letter_a_texture_sample)
@@ -147,8 +293,8 @@ func _process(delta):
 	var local_mouse_pos = grid.local_to_map(global_mouse_pos)
 	
 	# Snap the letter tile to the nearest grid cell
-	if (selected_tile): 
-		selected_tile.node.position = grid.map_to_local(local_mouse_pos) - Vector2(grid.tile_set.tile_size) / 2
+	#if (selected_tile): 
+	#	selected_tile.node.position = grid.map_to_local(local_mouse_pos) - Vector2(grid.tile_set.tile_size) / 2
 
 func _unhandled_input(event):
 	## !IMPORTANT
@@ -276,44 +422,59 @@ func _on_hud_letter_selected(letter):
 	selected_tile.node.get_node("Sprite2D").texture = tile_info.texture
 	selected_tile.letter = letter
 
-func find_definitions():
-	# var horizontal_words = grid.find_horizontal_words()
-	# var vertical_words = grid.find_vertical_words()
-	var horizontal_words = grid.find_horizontal_words()
-	var vertical_words = grid.find_vertical_words()
+func _on_letter_selected(letter):
+	var tile_info = tile_info_dict[letter]
+	print(tile_info_dict)
+	selected_tile = tile_info
+	print("YESS")
+	print(selected_tile)
+
+
+
+#func find_definitions():
+	## var horizontal_words = grid.find_horizontal_words()
+	## var vertical_words = grid.find_vertical_words()
+	#var horizontal_words = grid.find_horizontal_words()
+	#var vertical_words = grid.find_vertical_words()
+	#
+	#grid.words = horizontal_words + vertical_words
+	#print("")
+	#print(grid.words)
+	#for word in grid.words:
+		#print(word)
+		## create new http request
+		#var new_request = HTTPRequest.new()
+		#add_child(new_request)
+		#requests.append(new_request)
+		## request
+		#new_request.request("https://api.dictionaryapi.dev/api/v2/entries/en/" + word)
+		#new_request.request_completed.connect(_on_request_completed)
 	
-	grid.words = horizontal_words + vertical_words
-	print("")
-	print(grid.words)
-	for word in grid.words:
-		print(word)
-		# create new http request
-		var new_request = HTTPRequest.new()
-		add_child(new_request)
-		requests.append(new_request)
-		# request
-		new_request.request("https://api.dictionaryapi.dev/api/v2/entries/en/" + word)
-		new_request.request_completed.connect(_on_request_completed)
+#func _on_request_completed(result, response_code, headers, body):
+	#var json = JSON.parse_string(body.get_string_from_utf8())
+	#if result != HTTPRequest.RESULT_SUCCESS:
+		#print(result)
+		#return
+	#
+	#print("json")
+	#print(json[0])
+	#
+	#var node = get_node(requests[0].to_string())
+	#node.disconnect("request_completed", _on_request_completed)
+	#node.queue_free()
+	#requests.pop_front()
 	
 		
 
 func _on_round_end():
-	find_definitions()
+	#find_definitions()
+	pass
 
-func _on_request_completed(result, response_code, headers, body):
-	var json = JSON.parse_string(body.get_string_from_utf8())
-	if result != HTTPRequest.RESULT_SUCCESS:
-		print(result)
-		return
-	
-	print("json")
-	print(json[0])
-	
-	var node = get_node(requests[0].to_string())
-	node.disconnect("request_completed", _on_request_completed)
-	node.queue_free()
-	requests.pop_front()
 
 
 func _on_timer_timeout():
-	find_definitions()
+	#find_definitions()
+	pass
+
+
+

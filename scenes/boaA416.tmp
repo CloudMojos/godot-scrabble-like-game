@@ -1,9 +1,11 @@
-[gd_scene load_steps=67 format=3 uid="uid://cpcub12coy6v4"]
+[gd_scene load_steps=69 format=3 uid="uid://cpcub12coy6v4"]
 
 [ext_resource type="Script" path="res://scripts/Board.gd" id="1_edhdt"]
 [ext_resource type="Texture2D" uid="uid://bt8krn22nfxxm" path="res://assets/BoardTile.png" id="1_wbbac"]
 [ext_resource type="Texture2D" uid="uid://c6q1m5gofwdlx" path="res://assets/SelectedTile.png" id="2_3he7m"]
 [ext_resource type="Script" path="res://scripts/GameStateManager.gd" id="2_l5pj5"]
+[ext_resource type="Script" path="res://scripts/WordValidation.gd" id="3_1iq8d"]
+[ext_resource type="Script" path="res://scripts/Trie.gd" id="4_imt0b"]
 [ext_resource type="Script" path="res://scripts/BoardGrid.gd" id="4_k4dd1"]
 [ext_resource type="Texture2D" uid="uid://buuar2k17epb1" path="res://assets/Tiles/FreeTile.png" id="5_pce0q"]
 [ext_resource type="Script" path="res://scripts/BoardCam.gd" id="5_yu31x"]
@@ -276,6 +278,12 @@ script = ExtResource("1_edhdt")
 
 [node name="GameStateManager" type="Node" parent="."]
 script = ExtResource("2_l5pj5")
+
+[node name="WordValidation" type="Node" parent="."]
+script = ExtResource("3_1iq8d")
+
+[node name="Trie" type="Node" parent="WordValidation"]
+script = ExtResource("4_imt0b")
 
 [node name="BoardGrid" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_8nxl7")
